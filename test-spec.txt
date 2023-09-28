@@ -1,0 +1,11 @@
+describe("Test with File Upload and Table Update", () => {
+  it("should upload a file, insert data, refresh, and verify table update", () => {
+    cy.visit("https://testpages.herokuapp.com/styled/tag/dynamic-table.html");
+    cy.fixture("test-data.json").then((data) => {
+      cy.get("#file-input").attachFile("test-data.json");
+    });
+    cy.get("#text-box").type("[{"name" : "Bob", "age" : 20, "gender": "male"}, {"name": "George", "age" : 42, "gender": "male"}, {"name": "Sara", "age" : 42, "gender": "female"}, {"name": "Conor", "age" : 40, "gender": "male"}, {"name": "Jennifer", "age" : 42, "gender": "female"}]");
+    cy.refresh();
+    cy.get("#table").should("contain", "[{"name" : "Bob", "age" : 20, "gender": "male"}, {"name": "George", "age" : 42, "gender": "male"}, {"name": "Sara", "age" : 42, "gender": "female"}, {"name": "Conor", "age" : 40, "gender": "male"}, {"name": "Jennifer", "age" : 42, "gender": "female"}]");
+  });
+});
